@@ -63,15 +63,23 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         uses: docker/build-push-action@v3
+        with:
+          context: ./client
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY_NAME }}:$${{ steps.vars.outputs.tag }}
+          platforms: linux/arm64
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        working-directory: ./client
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: ${{ steps.vars.outputs.tag }}
-        with:
-          context: ./client
-          push: true
-          tags: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          platforms: linux/arm64
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Download task definition
         run: |
