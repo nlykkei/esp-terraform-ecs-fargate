@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const path = require("path");
 const fs = require("fs");
 
-const DEFAULT_PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const APP_URL = process.env.APP_URL || "localhost";
 
 // initialize express.
@@ -11,6 +11,12 @@ const app = express();
 
 // Configure morgan module to log all requests.
 app.use(morgan("dev"));
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    health: "ok",
+  });
+});
 
 app.get("/authConfig.js", function (req, res) {
   fs.readFile(
@@ -35,8 +41,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/index.html"));
 });
 
-app.listen(DEFAULT_PORT, () => {
-  console.log(`Sample app listening on port ${DEFAULT_PORT}!`);
+app.listen(PORT, () => {
+  console.log(`Sample app listening on port ${PORT}!`);
 });
 
 module.exports = app;
