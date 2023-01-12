@@ -66,7 +66,7 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY_NAME }}:$${{ steps.vars.outputs.tag }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}
           platforms: linux/arm64
 
       - name: Download task definition
