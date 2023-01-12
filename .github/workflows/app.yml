@@ -1,5 +1,5 @@
 ---
-name: "workflow"
+name: "Deploy App"
 
 "on":
   push:
