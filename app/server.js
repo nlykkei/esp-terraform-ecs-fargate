@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const path = require("path");
 const fs = require("fs");
 
-const DEFAULT_PORT = process.env.PORT || 8080;
+const DEFAULT_PORT = process.env.PORT || 3000;
 const APP_URL = process.env.APP_URL || "localhost";
 
 // initialize express.
