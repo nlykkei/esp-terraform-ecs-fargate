@@ -48,4 +48,6 @@ app.listen(PORT, () => {
   console.log(`Sample app listening on port ${PORT}!`);
 });
 
+console.log(`SECRET = ${process.env.SECRET}`);
+
 module.exports = app;
