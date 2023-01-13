@@ -1,14 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
 const passport = require("passport");
+const BearerStrategy = require("passport-azure-ad").BearerStrategy;
 const config = require("./config");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-const BearerStrategy = require("passport-azure-ad").BearerStrategy;
-
-// this is the API scope you've exposed during app registration
-const EXPOSED_SCOPES = ["access_as_user"];
+// API scope required to access /api endpoint (app registration)
+const SCOPES = ["access_as_user"];
 
 const options = {
   identityMetadata: `https://${config.metadata.authority}/${config.credentials.tenantID}/${config.metadata.version}/${config.metadata.discovery}`,
@@ -19,7 +18,7 @@ const options = {
   passReqToCallback: config.settings.passReqToCallback,
   loggingLevel: config.settings.loggingLevel,
   loggingNOPII: config.settings.loggingNOPII,
-  scope: EXPOSED_SCOPES,
+  scope: SCOPES,
 };
 
 const bearerStrategy = new BearerStrategy(options, function (token, done) {
@@ -27,15 +26,16 @@ const bearerStrategy = new BearerStrategy(options, function (token, done) {
   return done(null, {}, token);
 });
 
+passport.use(bearerStrategy);
+
 const app = express();
 
+// log all requests
 app.use(morgan("dev"));
 
 app.use(passport.initialize());
 
-passport.use(bearerStrategy);
-
-// enable CORS (for testing only -remove in production/deployment)
+// enable CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -51,12 +51,11 @@ app.get("/health", (req, res) => {
   });
 });
 
-// API endpoint exposed
 app.get(
   "/api",
   passport.authenticate("oauth-bearer", { session: false }),
   (req, res) => {
-    // Service relies on the name claim.
+    // service relies on the name claim
     res.status(200).json({
       name: req.authInfo["name"],
       "issued-by": req.authInfo["iss"],
