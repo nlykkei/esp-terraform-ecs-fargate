@@ -27,13 +27,23 @@ app.get("/authConfig.js", function (req, res) {
         res.sendStatus(404);
       } else {
         let result;
-        result = data
-          .replace(/<APP_URL>/g, APP_URL)
-          .replace(/<API_URL>/g, API_URL);
+        result = data.replace(/<APP_URL>/g, APP_URL);
         res.send(result);
       }
     }
   );
+});
+
+app.get("/api", function (req, res) {
+  fetch(API_URL, { method: "GET", headers: req.headers })
+    .then((res) => {
+      console.log(res);
+      res.status(200).json(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(500).end();
+    });
 });
 
 // static files
@@ -45,7 +55,7 @@ app.get("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Sample app listening on port ${PORT}!`);
+  console.log("Listening on port " + PORT);
 });
 
 console.log(`SECRET = ${process.env.SECRET}`);
