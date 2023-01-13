@@ -18,7 +18,7 @@ const msalConfig = {
 
 // Add here the endpoints and scopes for the web API you would like to use.
 const apiConfig = {
-  uri: "<APP_URL>", // e.g. http://localhost:5000/api
+  uri: `<APP_URL>/api`, // e.g. http://localhost:5000/api
   scopes: ["api://01ad74b5-0404-40c6-aaa1-8aea8d2c063e/access_as_user"], // e.g. ["scp1", "scp2"]
 };
 

@@ -91,7 +91,7 @@ function getTokenRedirect(request) {
 function passTokenToApi() {
   getTokenRedirect(tokenRequest)
     .then((response) => {
-      callApi(apiConfig.uri, response.accessToken);
+      callApi(`${apiConfig.uri}/api`, response.accessToken);
     })
     .catch((error) => {
       console.error(error);

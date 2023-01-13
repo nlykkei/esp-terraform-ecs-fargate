@@ -38,8 +38,11 @@ app.get("/authConfig.js", function (req, res) {
 app.get("/api", function (req, res) {
   fetch(API_URL, { method: "GET", headers: req.headers })
     .then((res) => {
-      console.log(res);
-      res.status(200).json(res);
+      return res.json();
+    })
+    .then((json) => {
+      console.log(json);
+      res.status(200).json(json);
     })
     .catch((err) => {
       console.log(err);
