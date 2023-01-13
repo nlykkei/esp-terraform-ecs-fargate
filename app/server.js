@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const fs = require("fs");
+const fetch = require("node-fetch");
 
 const PORT = process.env.PORT || 8080;
 const APP_URL = process.env.APP_URL || "localhost";
