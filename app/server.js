@@ -36,17 +36,20 @@ app.get("/authConfig.js", function (req, res) {
 });
 
 app.get("/api", function (req, res) {
-  fetch(API_URL, { method: "GET", headers: req.headers })
-    .then((res) => {
-      return res.json();
+  fetch(API_URL, {
+    method: "GET",
+    headers: { Authorization: req.headers["authorization"] },
+  })
+    .then((resp) => {
+      console.log(resp);
+      return resp.json();
     })
     .then((json) => {
-      console.log(json);
-      res.status(200).json(json);
+      res.status(200).send(json);
     })
     .catch((err) => {
       console.log(err);
-      res.send(500).end();
+      res.sendStatus(500).end();
     });
 });
 
