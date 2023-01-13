@@ -27,8 +27,9 @@ app.get("/authConfig.js", function (req, res) {
         res.sendStatus(404);
       } else {
         let result;
-        result = data.replace(/<APP_URL>/g, APP_URL);
-        result = data.replace(/<API_URL>/g, API_URL);
+        result = data
+          .replace(/<APP_URL>/g, APP_URL)
+          .replace(/<API_URL>/g, API_URL);
         res.send(result);
       }
     }
@@ -40,7 +41,7 @@ app.use(express.static("static"));
 
 // wildcard route for index.html
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/index.html"));
+  res.sendFile(path.join(__dirname, "static", "/index.html"));
 });
 
 app.listen(PORT, () => {

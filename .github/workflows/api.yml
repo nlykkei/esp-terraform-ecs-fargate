@@ -1,5 +1,5 @@
 ---
-name: "API Workflow"
+name: "Api Workflow"
 
 "on":
   push:
