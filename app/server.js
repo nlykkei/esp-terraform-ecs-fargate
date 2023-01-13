@@ -3,13 +3,13 @@ const morgan = require("morgan");
 const path = require("path");
 const fs = require("fs");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const APP_URL = process.env.APP_URL || "localhost";
+const API_URL = process.env.API_URL || "localhost";
 
-// initialize express.
 const app = express();
 
-// Configure morgan module to log all requests.
+// log all requests
 app.use(morgan("dev"));
 
 app.get("/health", (req, res) => {
@@ -26,17 +26,19 @@ app.get("/authConfig.js", function (req, res) {
       if (err) {
         res.sendStatus(404);
       } else {
+        let result;
         result = data.replace(/<APP_URL>/g, APP_URL);
+        result = data.replace(/<API_URL>/g, API_URL);
         res.send(result);
       }
     }
   );
 });
 
-// Setup app folders.
+// static files
 app.use(express.static("static"));
 
-// Set up a route for index.html
+// wildcard route for index.html
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/index.html"));
 });
