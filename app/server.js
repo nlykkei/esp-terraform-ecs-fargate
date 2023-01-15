@@ -6,7 +6,7 @@ const fetch = require("node-fetch");
 
 const PORT = process.env.PORT || 3000;
 const APP_URL = process.env.APP_URL || "http://localhost:3000";
-const API_URL = process.env.API_URL || "http://localhost:5000/api";
+const API_URL = process.env.API_URL || "http://localhost:5000";
 
 const app = express();
 
@@ -36,7 +36,7 @@ app.get("/authConfig.js", function (req, res) {
 });
 
 app.get("/api", function (req, res) {
-  fetch(API_URL, {
+  fetch(`${API_URL}/api`, {
     method: "GET",
     headers: { Authorization: req.headers["authorization"] },
   })
