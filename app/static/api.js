@@ -12,7 +12,10 @@ function callApi(endpoint, token) {
   logMessage("Calling Web API...");
 
   fetch(endpoint, options)
-    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
     .then((response) => {
       if (response) {
         logMessage("Web API responded: Hello " + response["name"] + "!");

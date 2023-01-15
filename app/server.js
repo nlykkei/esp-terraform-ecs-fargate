@@ -4,9 +4,9 @@ const path = require("path");
 const fs = require("fs");
 const fetch = require("node-fetch");
 
-const PORT = process.env.PORT || 8080;
-const APP_URL = process.env.APP_URL || "localhost";
-const API_URL = process.env.API_URL || "localhost";
+const PORT = process.env.PORT || 3000;
+const APP_URL = process.env.APP_URL || "http://localhost:3000";
+const API_URL = process.env.API_URL || "http://localhost:5000/api";
 
 const app = express();
 
