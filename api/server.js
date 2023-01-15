@@ -31,7 +31,7 @@ passport.use(bearerStrategy);
 const app = express();
 
 // log all requests
-app.use(morgan("dev"));
+app.use(morgan("common"));
 
 app.use(passport.initialize());
 
