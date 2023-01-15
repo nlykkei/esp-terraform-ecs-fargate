@@ -9,21 +9,21 @@ function callApi(endpoint, token) {
     headers: headers,
   };
 
-  logMessage("Calling Web API...");
+  logMessage("Calling API...");
 
   fetch(endpoint, options)
-    .then((response) => {
-      console.log(response);
-      return response.json();
+    .then((resp) => {
+      console.log(resp);
+      return resp.json();
     })
-    .then((response) => {
-      if (response) {
-        logMessage("Web API responded: Hello " + response["name"] + "!");
+    .then((resp) => {
+      if (resp) {
+        logMessage("API response: " + resp);
       }
-
-      return response;
+      return resp;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((err) => {
+      logMessage("API failed");
+      console.error(err);
     });
 }

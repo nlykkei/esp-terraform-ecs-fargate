@@ -36,9 +36,20 @@ app.get("/authConfig.js", function (req, res) {
 });
 
 app.get("/api", function (req, res) {
+  const tokenHeader = req.headers["authorization"];
+
+  if (!tokenHeader) {
+    res.sendStatus(401);
+  }
+
+  const parts = tokenHeader.split(" ");
+  if (parts.length !== 2 || parts[0] !== "Bearer") {
+    res.sendStatus(401);
+  }
+
   fetch(`${API_URL}/api`, {
     method: "GET",
-    headers: { Authorization: req.headers["authorization"] },
+    headers: { Authorization: tokenHeader },
   })
     .then((resp) => {
       console.log(resp);
@@ -49,7 +60,7 @@ app.get("/api", function (req, res) {
     })
     .catch((err) => {
       console.log(err);
-      res.sendStatus(500).end();
+      res.sendStatus(500);
     });
 });
 
