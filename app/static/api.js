@@ -9,6 +9,8 @@ function callApi(endpoint, token) {
     headers: headers,
   };
 
+  response.replaceChildren();
+
   logMessage("Calling API...");
 
   fetch(endpoint, options)
@@ -18,7 +20,9 @@ function callApi(endpoint, token) {
     })
     .then((resp) => {
       if (resp) {
-        logMessage("API response: " + resp);
+        logMessage(
+          "API response: " + "\n" + JSON.stringify(resp, undefined, 2)
+        );
       }
       return resp;
     })

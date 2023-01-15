@@ -11,7 +11,7 @@ const API_URL = process.env.API_URL || "http://localhost:5000";
 const app = express();
 
 // log all requests
-app.use(morgan("dev"));
+app.use(morgan("common"));
 
 app.get("/health", (req, res) => {
   res.status(200).json({
@@ -38,7 +38,7 @@ app.get("/authConfig.js", function (req, res) {
 app.get("/api", function (req, res) {
   const tokenHeader = req.headers["authorization"];
 
-  if (!tokenHeader) {
+  if (tokenHeader === undefined) {
     res.sendStatus(401);
   }
 
@@ -64,6 +64,16 @@ app.get("/api", function (req, res) {
     });
 });
 
+app.get("/secret", function (req, res) {
+  const secret = process.env.SECRET;
+
+  if (secret === undefined) {
+    res.sendStatus(404);
+  }
+
+  res.json({ name: "SECRET", value: secret });
+});
+
 // static files
 app.use(express.static("static"));
 
@@ -75,7 +85,5 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log("Listening on port " + PORT);
 });
-
-console.log(`SECRET = ${process.env.SECRET}`);
 
 module.exports = app;
