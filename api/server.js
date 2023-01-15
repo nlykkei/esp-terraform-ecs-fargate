@@ -4,7 +4,7 @@ const passport = require("passport");
 const BearerStrategy = require("passport-azure-ad").BearerStrategy;
 const config = require("./config");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 // API scope required to access /api endpoint (app registration)
 const SCOPES = ["access_as_user"];
