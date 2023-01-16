@@ -19,6 +19,9 @@ COPY . .
 
 RUN chown -R node:node /usr/src/app
 
+# Install curl for health checks
+RUN apt update && apt install -y curl 
+
 USER node
 EXPOSE 8080
 CMD [ "node", "server.js" ]

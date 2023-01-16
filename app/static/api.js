@@ -21,7 +21,7 @@ function callApi(endpoint, token) {
     .then((resp) => {
       if (resp) {
         logMessage(
-          "API response: " + "\n\n" + JSON.stringify(resp, undefined, 0)
+          "API response: " + "\n\n" + JSON.stringify(resp, undefined, 0) + "\n"
         );
       }
       return resp;
