@@ -5,6 +5,11 @@ variable "application" {
 variable "environment" {
   type    = string
   default = "dev"
+
+  validation {
+    condition     = contains(["dev", "uat", "prod"], var.environment)
+    error_message = "Invalid environment"
+  } 
 }
 
 variable "aws_region" {

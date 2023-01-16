@@ -5,6 +5,11 @@ variable "application" {
 variable "environment" {
   type    = string
   default = "dev"
+
+  validation {
+    condition     = contains(["dev", "uat", "prod"], var.environment)
+    error_message = "Invalid environment"
+  }
 }
 
 variable "vpc" {
@@ -23,7 +28,7 @@ variable "availability_zones" {
   type = list(string)
 }
 
-variable "image_registry" {
+variable "ecr_repository" {
   type = string
 }
 
